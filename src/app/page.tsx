@@ -3,7 +3,6 @@ import { Balance } from '../components/Balance'
 import { BlockNumber } from '../components/BlockNumber'
 import { ConnectButton } from '../components/ConnectButton'
 import { Connected } from '../components/Connected'
-import { NetworkSwitcher } from '../components/NetworkSwitcher'
 import { ReadContract } from '../components/ReadContract'
 import { ReadContracts } from '../components/ReadContracts'
 import { ReadContractsInfinite } from '../components/ReadContractsInfinite'
@@ -20,16 +19,17 @@ import { WriteContractPrepared } from '../components/WriteContractPrepared'
 export function Page() {
   return (
     <>
-      <h1>wagmi + RainbowKit + Next.js</h1>
-
-      <ConnectButton />
-
-      <Connected>
-        <hr />
-        <h2>Network</h2>
-        <NetworkSwitcher />
-        <br />
-        <hr />
+    <div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
+      <p className="text-3xl text-gray-700 font-bold mb-5">
+        Welcome!
+      </p>
+      <p className="text-gray-500 text-lg mb-5">
+      wagmi + RainbowKit + Next.js
+      </p>      
+    <ConnectButton/>    
+    </div>      
+    <div className="container mx-auto bg-gray-100 rounded-xl shadow border p-8 m-10">
+    <Connected>                  
         <h2>Account</h2>
         <Account />
         <br />
@@ -89,6 +89,7 @@ export function Page() {
         <h2>Write Contract (Prepared)</h2>
         <WriteContractPrepared />
       </Connected>
+    </div>      
     </>
   )
 }
