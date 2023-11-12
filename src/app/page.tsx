@@ -1,3 +1,4 @@
+import { getContract } from 'viem'
 import { Account } from '../components/Account'
 import { Balance } from '../components/Balance'
 import { BlockNumber } from '../components/BlockNumber'
@@ -13,8 +14,7 @@ import { SignTypedData } from '../components/SignTypedData'
 import { Token } from '../components/Token'
 import { WatchContractEvents } from '../components/WatchContractEvents'
 import { WatchPendingTransactions } from '../components/WatchPendingTransactions'
-import { WriteContract } from '../components/WriteContract'
-import { WriteContractPrepared } from '../components/WriteContractPrepared'
+import abi from '../../ProposalContract.json'
 
 export function Page() {
   return (
@@ -28,6 +28,9 @@ export function Page() {
       </p>      
     <ConnectButton/>    
     </div>      
+    <div className="container mx-auto bg-gray-100 rounded-xl shadow border p-8 m-10">
+      Proposals for 0x105a1E605d5D34FB096c6f35Ceb34f66e64c7710    
+    </div>
     <div className="container mx-auto bg-gray-100 rounded-xl shadow border p-8 m-10">
     <Connected>                  
         <h2>Account</h2>
@@ -79,15 +82,7 @@ export function Page() {
         <br />
         <hr />
         <h2>Watch Pending Transactions</h2>
-        <WatchPendingTransactions />
-        <br />
-        <hr />
-        <h2>Write Contract</h2>
-        <WriteContract />
-        <br />
-        <hr />
-        <h2>Write Contract (Prepared)</h2>
-        <WriteContractPrepared />
+        <WatchPendingTransactions />        
       </Connected>
     </div>      
     </>
