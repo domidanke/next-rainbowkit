@@ -12,13 +12,16 @@
     "@rainbow-me/rainbowkit": "^1.0.0",
     "next": "^13.4.0",
     "react": "^18.2.0",
+    "react-datepicker": "^4.21.0",
     "react-dom": "^18.2.0",
+    "use-debounce": "^10.0.0",
     "viem": "~0.3.36",
     "wagmi": "^1.0.6"
   },
   "devDependencies": {
     "@types/node": "^17.0.31",
     "@types/react": "^18.0.9",
+    "@types/react-datepicker": "^4.19.3",
     "@types/react-dom": "^18.0.3",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.15.0",

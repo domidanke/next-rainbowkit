@@ -15,6 +15,8 @@ import { Token } from '../components/Token'
 import { WatchContractEvents } from '../components/WatchContractEvents'
 import { WatchPendingTransactions } from '../components/WatchPendingTransactions'
 import abi from '../../ProposalContract.json'
+import { ProposalForm } from '../components/ProposalForm'
+import { AllProposals } from '../components/AllProposals'
 
 export function Page() {
   return (
@@ -29,7 +31,10 @@ export function Page() {
     <ConnectButton/>    
     </div>      
     <div className="container mx-auto bg-gray-100 rounded-xl shadow border p-8 m-10">
-      Proposals for 0x105a1E605d5D34FB096c6f35Ceb34f66e64c7710    
+      <AllProposals></AllProposals>
+    </div>
+    <div className="container mx-auto bg-gray-100 rounded-xl shadow border p-8 m-10">
+      <ProposalForm></ProposalForm>
     </div>
     <div className="container mx-auto bg-gray-100 rounded-xl shadow border p-8 m-10">
     <Connected>                  
