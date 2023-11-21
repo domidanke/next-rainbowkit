@@ -32,9 +32,12 @@ export function ProposalForm() {
     <form
     onSubmit={(e) => {
       e.preventDefault()            
+      if (description.length == 0) {
+        return;
+      }
       startDate.setHours(0,0,0,0)
       write({
-        args: [BigInt(startDate.getTime()), description],
+        args: [BigInt(startDate.getTime()  /1000), description],
       })
     }}
   >
@@ -74,7 +77,7 @@ export function ProposalForm() {
           </div>
         </>
       )}
-      {isError && <div>{(error as BaseError)?.shortMessage}</div>}
+      {isError && <div className='text-red-700'>{(error as BaseError)?.shortMessage}</div>}
         </div>    
       </div>
     </form>

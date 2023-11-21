@@ -10,12 +10,21 @@ import { useContractRead, useContractReads, useContractWrite, useWaitForTransact
 export function AllProposals() {  
 
   const [numOfProposals, setNumOfProposals] = React.useState(0)  
+  var proposals:({
+    error: Error;
+    result?: undefined;
+    status: "failure";
+} | {
+    error?: undefined;
+    result: unknown;
+    status: "success";
+})[] | undefined = [];
   return (
     <div>
       <div>
         <TotalAndFetch />
         <br />
-        <ProposalDetails/>
+        <ProposalDetails/>        
       </div>
     </div>
   )
@@ -28,7 +37,10 @@ export function AllProposals() {
       enabled: Boolean('0x105a1E605d5D34FB096c6f35Ceb34f66e64c7710'),
     })
     
-    setNumOfProposals(parseInt(data!.toString()));
+    if (data != null) {
+      setNumOfProposals(parseInt(data!.toString()));
+    }
+  
   
     return (
       <div className='text-xl font-bold'>      
@@ -38,8 +50,7 @@ export function AllProposals() {
     )
   }
 
-  function ProposalDetails() {
-    const now = new Date();
+  function ProposalDetails() {    
     const endpoints = [];
     for (let i = 0; i < numOfProposals; i++) {
       endpoints.push({
@@ -54,6 +65,8 @@ export function AllProposals() {
       contracts: endpoints,
     })
 
+    proposals = data;
+
     const { write, error, isLoading, isError } = useContractWrite({
       ...domContractConfig,
       functionName: 'vote',
@@ -67,33 +80,53 @@ export function AllProposals() {
           {/* Vote Button Row */}
           <div className="flex items-center mb-4">            
             {/* Item Description */}
-          <p className="text-xl font-bold mb-4">{proposal.result.description} (Votes: {proposal.result.voterCount.toString()})</p>          
+          <p className="text-xl font-bold mb-4">{proposal.result?.description} (Votes: {proposal.result?.voterCount.toString()})</p>          
           </div>            
-    
-          {/* Additional Details */}
-          <div className="text-gray-700">
-            <p>Created By: {proposal.result.createdBy}</p>
-            <p>Deadline: {new Date(Number(proposal.result.deadline)).toISOString()}</p>
-            {/* Add more details as needed */}
+              
+        {
+          proposal.result != null ? (
+            <div className="text-gray-700">
+            <p>Created By: {proposal.result?.createdBy}</p>        
+            <p>Deadline: {new Date(Number(proposal.result?.deadline)*1000).toISOString()}</p>
+            <p>Created On: {new Date(Number(proposal.result?.createdDate)*1000).toISOString()}</p>            
           </div>          
-          <div className='flex items-center mt-8 h-16'>
-
-          <div  className='flex-grow mt-3'>
-            <p className='text-red-700 text-xs '>{isError ? `${error?.message}` : ''}</p>
-          </div>
-          {now > new Date(Number(proposal.result.deadline)) ? (
-        <p className='text-orange-700'>This deadline has been reached.</p>
-      ) : (
-        <button className="w-24 h-12 bg-green-500 text-white px-4 py-2 rounded-md flex-shrink-0 mr-2" onClick={() => {
-          write({
-            args: [proposal.result.id.toString()],
-          })
-        }}>{isLoading ? 'Voting...' : 'Vote'}</button>
-      )}                                    
-            </div>            
+          ) : (
+            <div></div>
+          )}     
+          <VoteButton proposal={proposal}/>               
         </div>         
         ))}             
       </div>
+    )
+  }  
+
+  function VoteButton({ proposal })  {    
+    console.warn(proposal.result);     
+    const now = new Date();
+    const { write, error, isLoading, isError } = useContractWrite({
+      ...domContractConfig,
+      functionName: 'vote',
+      args: [`0xplaceholder`],    
+    })
+  
+    return (
+      <div>        
+          <div className='flex items-center mt-8 h-16'>
+
+<div  className='flex-grow mt-3'>
+  <p className='text-red-700 text-xs '>{isError ? `${error?.message}` : ''}</p>
+</div>
+{now > new Date(Number(proposal.result?.deadline)*1000) ? (
+<p className='text-orange-700'>This deadline has been reached.</p>
+) : (
+<button className="w-24 h-12 bg-green-500 text-white px-4 py-2 rounded-md flex-shrink-0 mr-2" onClick={() => {
+write({
+  args: [proposal.result?.id.toString()],
+})
+}}>{isLoading ? 'Voting...' : proposal.result?.senderVoted ? 'You voted' : 'Vote'}</button>
+)}                                    
+  </div>            
+        </div>               
     )
   }  
 }

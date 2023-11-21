@@ -209,7 +209,7 @@ export const usdcContractConfig = {
 } as const;
 
 export const domContractConfig = {
-	address: '0x105a1E605d5D34FB096c6f35Ceb34f66e64c7710',
+	address: '0xf80c9Ef60B9b88b2129A6B9af77ceAB330345f57',
 	abi: [
 		{
 			inputs: [],
@@ -300,6 +300,11 @@ export const domContractConfig = {
 							name: 'voterCount',
 							type: 'uint256',
 						},
+						{
+							internalType: 'bool',
+							name: 'senderVoted',
+							type: 'bool',
+						},
 					],
 					internalType: 'struct ProposalContract.ProposalDto',
 					name: '',
@@ -307,6 +312,19 @@ export const domContractConfig = {
 				},
 			],
 			stateMutability: 'view',
+			type: 'function',
+		},
+		{
+			inputs: [
+				{
+					internalType: 'bytes32',
+					name: 'proposalId',
+					type: 'bytes32',
+				},
+			],
+			name: 'getProposalById',
+			outputs: [],
+			stateMutability: 'nonpayable',
 			type: 'function',
 		},
 		{
