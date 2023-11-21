@@ -10,19 +10,6 @@ import { useContractWrite, useWaitForTransaction } from 'wagmi';
  
 
 export function ProposalForm() {
-
-  const [address, setAddress] = React.useState<Address>(
-    '0x105a1E605d5D34FB096c6f35Ceb34f66e64c7710',
-  )
-  // const { data, error, isLoading, isSuccess } = useContractRead({
-  //   ...domContractConfig,
-  //   functionName: 'getProposalCount',    
-  //   enabled: Boolean(address),
-  // })
-
-
-
-
   const [description, setTo] = React.useState('')
   const [debouncedDescription] = useDebounce(description, 500)  
 
@@ -56,7 +43,7 @@ export function ProposalForm() {
       <div>
         Description&nbsp;&nbsp;&nbsp;&nbsp;
       <input
-      className='mr-10'
+      className='mr-10 w-6/12'
         aria-label="Description"
         onChange={(e) => setTo(e.target.value)}        
         value={description}
@@ -74,8 +61,8 @@ export function ProposalForm() {
       </div>      
       <div className='columns-1'>
           <div>&nbsp;</div>
-          <button className='bg-emerald-200 border-2 border-black rounded-2xl w-40' type="submit" disabled={isLoading}>
-            Send Proposal
+          <button className='w-64 h-12 bg-green-500 text-white px-4 py-2 rounded-md' type="submit" disabled={isLoading}>
+            Create Proposal
           </button>
           {isLoading && <div>Sending...</div>}
       {isPending && <div>Transaction pending...</div>}
